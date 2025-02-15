@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+struct Node* insertNode(struct Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+
+    if (data < root->data) {
+        root->left = insertNode(root->left, data);
+    } else if (data > root->data) {
+        root->right = insertNode(root->right, data);
+    }
+
+    return root;
+}
+
+int countNodes(struct Node* root) {
+    if (root == NULL) {
+        return 0;
+    }
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+
+int main() {
+    struct Node* root = NULL;
+
+    root = insertNode(root, 60);
+    insertNode(root, 15);
+    insertNode(root, 4);
+    insertNode(root, 30);
+    insertNode(root, 70);
+    insertNode(root, 65);
+    insertNode(root, 10);
+    insertNode(root, 80);
+    insertNode(root, 95);
+    insertNode(root, 25);
+    insertNode(root, 34);
+
+    int nodeCount = countNodes(root);
+    printf("Número de nós na árvore: %d\n", nodeCount);
+
+    return 0;
+}
